@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="MAIN" Id="{f634286c-84e3-47b0-85d8-e14e20f383c6}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bIsInitialized	: BOOL;
+	//Alarms 
+	fbAlarm1		: FB_TcAlarm;
+	fbAlarm2		: FB_TcAlarm;
+	fbAlarm3		: FB_TcAlarm;
+	fbAlarm4		: FB_TcAlarm;
+	fbAlarm5		: FB_TcAlarm;
+	bAlarm			: BOOL;
+	bClearAlarm		: BOOL;
+	//Warning 
+	fbWarning1 		: FB_TcAlarm;
+	fbWarning2 		: FB_TcAlarm;
+	fbWarning3 		: FB_TcAlarm;
+	fbWarning4 		: FB_TcAlarm;
+	fbWarning5 		: FB_TcAlarm;
+	bWarning		: BOOL;
+	bClearWarning	: BOOL;
+	//Info
+	fbInfo1			: FB_TcMessage;
+	fbInfo2			: FB_TcMessage;
+	fbInfo3			: FB_TcMessage;
+	fbInfo4			: FB_TcMessage;
+	fbInfo5			: FB_TcMessage;	
+	bInfo			: BOOL;
+	//To show alarms with arguments
+	fbAlarmWithArgument1 	: FB_TcAlarm;
+	fbAlarmWithArgument2 	: FB_TcAlarm;
+	fErrorID1 				: LREAL := 999;
+	fErrorID2 				: LREAL := 777;
+	sErrorString 			: STRING := 'This is error id 777';
+	bAlarmWithArg			: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Initialized the alarms, warnings and info 
+IF NOT bIsInitialized THEN
+	bIsInitialized := TRUE;
+	fbAlarm1.CreateEx(TC_Events.MyAlarms.Alarm1, TRUE, 0);
+	fbAlarm2.CreateEx(TC_Events.MyAlarms.Alarm2, TRUE, 0);
+	fbAlarm3.CreateEx(TC_Events.MyAlarms.Alarm3, TRUE, 0);
+	fbAlarm4.CreateEx(TC_Events.MyAlarms.Alarm4, TRUE, 0);
+	fbAlarm5.CreateEx(TC_Events.MyAlarms.Alarm5, TRUE, 0);
+	
+	fbWarning1.CreateEx(TC_Events.InfoWarning.Warning1, TRUE, 0);
+	fbWarning2.CreateEx(TC_Events.InfoWarning.Warning2, TRUE, 0);
+	fbWarning3.CreateEx(TC_Events.InfoWarning.Warning3, TRUE, 0);
+	fbWarning4.CreateEx(TC_Events.InfoWarning.Warning4, TRUE, 0);
+	fbWarning5.CreateEx(TC_Events.InfoWarning.Warning5, TRUE, 0);
+	
+	fbInfo1.CreateEx(TC_Events.InfoWarning.Info1, 0);
+	fbInfo2.CreateEx(TC_Events.InfoWarning.Info2, 0);
+	fbInfo3.CreateEx(TC_Events.InfoWarning.Info3, 0);
+	fbInfo4.CreateEx(TC_Events.InfoWarning.Info4, 0);
+	fbInfo5.CreateEx(TC_Events.InfoWarning.Info5, 0);
+	
+	fbAlarmWithArgument1.CreateEx(TC_Events.DynamicAlarms.DynAlarm1, TRUE, 0(*fbSource*));
+	fbAlarmWithArgument2.CreateEx(TC_Events.DynamicAlarms.DynAlarm2, TRUE, 0(*fbSource*));
+	
+END_IF 
+
+//Trigger the alarms
+IF bAlarm THEN 
+	bAlarm := FALSE;
+	fbAlarm1.Raise(0);
+	fbAlarm2.Raise(0);
+	fbAlarm3.Raise(0);
+	fbAlarm4.Raise(0);
+	fbAlarm5.Raise(0);
+END_IF
+
+//To raise the alarms with the arguments
+IF bAlarmWithArg THEN 
+	bAlarmWithArg := FALSE;
+	//The arguments must be defined after Create()/CreateEx(), but before Send(), Raise()
+	fbAlarmWithArgument1.ipArguments.Clear().AddLReal(fErrorID1);
+	//Several arguments can be specified in concatenated form 
+	fbAlarmWithArgument2.ipArguments.Clear().AddLReal(fErrorID2).AddString(sErrorString);
+	//Raise the alarms
+	fbAlarmWithArgument1.Raise(0);
+	fbAlarmWithArgument2.Raise(0);
+END_IF
+
+
+//Clear all alarms 
+IF bClearAlarm THEN
+	bClearAlarm := FALSE;
+	fbAlarm1.Clear(0, TRUE);
+	fbAlarm2.Clear(0, TRUE);
+	fbAlarm3.Clear(0, TRUE);
+	fbAlarm4.Clear(0, TRUE);
+	fbAlarm5.Clear(0, TRUE);
+	
+	fbAlarmWithArgument1.Clear(0, TRUE);
+	fbAlarmWithArgument2.Clear(0, TRUE);
+END_IF
+
+//Raise the warnings. 
+IF bWarning THEN
+	bWarning := FALSE;
+	fbWarning1.Raise(0);
+	fbWarning2.Raise(0);
+	fbWarning3.Raise(0);
+	fbWarning4.Raise(0);
+	fbWarning5.Raise(0);
+END_IF
+
+//Clear the warning
+IF bClearWarning THEN 
+	bClearWarning := FALSE;
+	fbWarning1.Clear(0, TRUE);
+	fbWarning2.Clear(0, TRUE);
+	fbWarning3.Clear(0, TRUE);
+	fbWarning4.Clear(0, TRUE);
+	fbWarning5.Clear(0, TRUE);
+END_IF
+
+//Trigger the info
+IF bInfo THEN 
+	bInfo := FALSE;
+	fbInfo1.Send(0);
+	fbInfo2.Send(0);
+	fbInfo3.Send(0);
+	fbInfo4.Send(0);
+	fbInfo5.Send(0);
+END_IF
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="21" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="16" Count="3" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="51" Count="2" />
+      <LineId Id="55" Count="1" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="93" Count="4" />
+      <LineId Id="139" Count="1" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="63" Count="3" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="168" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="29" Count="3" />
+      <LineId Id="67" Count="3" />
+      <LineId Id="153" Count="1" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="39" Count="2" />
+      <LineId Id="71" Count="3" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="80" Count="3" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="105" Count="3" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="28" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

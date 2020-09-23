@@ -1,0 +1,12 @@
+﻿{
+  "controlTypeValues": {
+    "tchmi-toggle-button": {
+      "attributes": {
+        "TextFontSize": 14.0
+      },
+      "themedResources": {}
+    }
+  },
+  "controlClassValues": {},
+  "$schema": "C:/TwinCAT/Functions/TE2000-HMI-Engineering/Infrastructure/TcHmiFramework/Latest/Schema/ThemeDescription.Schema.json"
+}

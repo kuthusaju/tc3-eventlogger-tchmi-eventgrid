@@ -1,0 +1,343 @@
+﻿<div id="Desktop" data-tchmi-type="tchmi-view"
+     data-tchmi-top="0" data-tchmi-left="0"
+     data-tchmi-width-mode="Content"
+     data-tchmi-min-width="100" data-tchmi-min-width-unit="%"
+     data-tchmi-height-mode="Content"
+     data-tchmi-min-height="100" data-tchmi-min-height-unit="%"
+     data-tchmi-background-image="Images/Background.png"
+     data-tchmi-background-image-height="100" data-tchmi-background-image-width="100"
+     data-tchmi-background-image-height-unit="%" data-tchmi-background-image-width-unit="%">
+
+  <div id="ViewDesktopBeckhoffLogo" data-tchmi-type="tchmi-image" 
+       data-tchmi-src="Images/Beckhoff_Logo.svg"
+       data-tchmi-left="20" data-tchmi-top="20" 
+       data-tchmi-width="194" data-tchmi-height="57">
+
+  </div>
+
+<div id="TcHmiEventGrid" data-tchmi-type="tchmi-event-grid" data-tchmi-height="400" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-show-menu-bar="True" data-tchmi-top="87" data-tchmi-top-unit="px" data-tchmi-width-unit="px" data-tchmi-width="926" data-tchmi-is-enabled="True">
+
+<script data-tchmi-target-attribute="data-tchmi-columns" type="application/json">
+[
+  {
+    "columnName": "type"
+  },
+  {
+    "columnName": "severity"
+  },
+  {
+    "columnName": "timeAndDateRaised"
+  },
+  {
+    "columnName": "text"
+  },
+  {
+    "columnName": "timeAndDateConfirmed"
+  },
+  {
+    "columnName": "timeAndDateCleared"
+  }
+]
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-filter" type="application/json">
+[
+  {
+    "path": "domain",
+    "comparator": "==",
+    "value": "TcHmiEventLogger"
+  },
+  {
+    "logic": "AND"
+  },
+  {
+    "path": "timeRaised",
+    "comparator": ">=",
+    "value": "1970-01-01T00:00"
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiToggleButtonAll" data-tchmi-type="tchmi-toggle-button" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="846" data-tchmi-left-unit="px" data-tchmi-text="All Events" data-tchmi-top="518" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-toggle-group="ShowAlarms" data-tchmi-toggle-state="Active">
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiToggleButtonAll.onStatePressed",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "expressions": [
+          {
+            "compare1": {
+              "objectType": "Symbol",
+              "symbolExpression": "%ctrl%TcHmiToggleButtonAll::ToggleState%/ctrl%"
+            },
+            "compare2": {
+              "objectType": "StaticValue",
+              "valueType": "tchmi:framework#/definitions/ToggleState",
+              "value": "Active"
+            },
+            "compareOperator": "==",
+            "logic": null
+          }
+        ],
+        "true": [
+          {
+            "objectType": "WriteToSymbol",
+            "active": true,
+            "symbolExpression": "%ctrl%TcHmiEventGrid::Filter%/ctrl%",
+            "valueType": "tchmi:server#/definitions/eventFilter",
+            "value": {
+              "objectType": "StaticValue",
+              "valueType": "tchmi:server#/definitions/eventFilter",
+              "value": [
+                {
+                  "path": "domain",
+                  "comparator": "==",
+                  "value": "TcHmiEventLogger"
+                }
+              ]
+            },
+            "asyncWait": true
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiToggleButtonActive" data-tchmi-type="tchmi-toggle-button" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="736" data-tchmi-left-unit="px" data-tchmi-text="Active Alarms" data-tchmi-top="518" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-toggle-group="ShowAlarms" data-tchmi-toggle-state="Normal">
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiToggleButtonActive.onStatePressed",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "expressions": [
+          {
+            "compare1": {
+              "objectType": "Symbol",
+              "symbolExpression": "%ctrl%TcHmiToggleButtonActive::ToggleState%/ctrl%"
+            },
+            "compare2": {
+              "objectType": "StaticValue",
+              "valueType": "tchmi:framework#/definitions/ToggleState",
+              "value": "Active"
+            },
+            "compareOperator": "==",
+            "logic": null
+          }
+        ],
+        "true": [
+          {
+            "objectType": "WriteToSymbol",
+            "active": true,
+            "symbolExpression": "%ctrl%TcHmiEventGrid::Filter%/ctrl%",
+            "valueType": "tchmi:server#/definitions/eventFilter",
+            "value": {
+              "objectType": "StaticValue",
+              "valueType": "tchmi:server#/definitions/eventFilter",
+              "value": [
+                {
+                  "path": "domain",
+                  "comparator": "==",
+                  "value": "TcHmiEventLogger"
+                },
+                {
+                  "logic": "AND"
+                },
+                {
+                  "path": "type",
+                  "comparator": "==",
+                  "value": 1
+                },
+                {
+                  "logic": "AND"
+                },
+                {
+                  "path": "severity",
+                  "comparator": "==",
+                  "value": 3
+                },
+                {
+                  "logic": "AND"
+                },
+                {
+                  "path": "confirmationState",
+                  "comparator": "==",
+                  "value": 2
+                }
+              ]
+            },
+            "asyncWait": true
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiToggleButtonWarning" data-tchmi-type="tchmi-toggle-button" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="626" data-tchmi-left-unit="px" data-tchmi-text="Active Warning" data-tchmi-top="518" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-toggle-group="ShowAlarms" data-tchmi-toggle-state="Normal">
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiToggleButtonWarning.onStatePressed",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "expressions": [
+          {
+            "compare1": {
+              "objectType": "Symbol",
+              "symbolExpression": "%ctrl%TcHmiToggleButtonWarning::ToggleState%/ctrl%"
+            },
+            "compare2": {
+              "objectType": "StaticValue",
+              "valueType": "tchmi:framework#/definitions/ToggleState",
+              "value": "Active"
+            },
+            "compareOperator": "==",
+            "logic": null
+          }
+        ],
+        "true": [
+          {
+            "objectType": "WriteToSymbol",
+            "active": true,
+            "symbolExpression": "%ctrl%TcHmiEventGrid::Filter%/ctrl%",
+            "valueType": "tchmi:server#/definitions/eventFilter",
+            "value": {
+              "objectType": "StaticValue",
+              "valueType": "tchmi:server#/definitions/eventFilter",
+              "value": [
+                {
+                  "path": "domain",
+                  "comparator": "==",
+                  "value": "TcHmiEventLogger"
+                },
+                {
+                  "logic": "AND"
+                },
+                {
+                  "path": "type",
+                  "comparator": "==",
+                  "value": 1
+                },
+                {
+                  "logic": "AND"
+                },
+                {
+                  "path": "severity",
+                  "comparator": "==",
+                  "value": 2
+                },
+                {
+                  "logic": "AND"
+                },
+                {
+                  "path": "confirmationState",
+                  "comparator": "==",
+                  "value": 2
+                }
+              ]
+            },
+            "asyncWait": true
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+<div id="TcHmiToggleButtonInfo" data-tchmi-type="tchmi-toggle-button" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="516" data-tchmi-left-unit="px" data-tchmi-text="Info" data-tchmi-top="518" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="True" data-tchmi-toggle-group="ShowAlarms" data-tchmi-toggle-state="Normal">
+
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiToggleButtonInfo.onStatePressed",
+    "actions": [
+      {
+        "objectType": "Condition",
+        "active": true,
+        "expressions": [
+          {
+            "compare1": {
+              "objectType": "Symbol",
+              "symbolExpression": "%ctrl%TcHmiToggleButtonInfo::ToggleState%/ctrl%"
+            },
+            "compare2": {
+              "objectType": "StaticValue",
+              "valueType": "tchmi:framework#/definitions/ToggleState",
+              "value": "Active"
+            },
+            "compareOperator": "==",
+            "logic": null
+          }
+        ],
+        "true": [
+          {
+            "objectType": "WriteToSymbol",
+            "active": true,
+            "symbolExpression": "%ctrl%TcHmiEventGrid::Filter%/ctrl%",
+            "valueType": "tchmi:server#/definitions/eventFilter",
+            "value": {
+              "objectType": "StaticValue",
+              "valueType": "tchmi:server#/definitions/eventFilter",
+              "value": [
+                {
+                  "path": "domain",
+                  "comparator": "==",
+                  "value": "TcHmiEventLogger"
+                },
+                {
+                  "logic": "AND"
+                },
+                {
+                  "path": "type",
+                  "comparator": "==",
+                  "value": 0
+                }
+              ]
+            },
+            "asyncWait": true
+          }
+        ],
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+
+</div>

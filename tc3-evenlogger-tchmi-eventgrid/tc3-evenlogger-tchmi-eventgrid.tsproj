@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.10">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{9632DAD7-1914-4CC8-9BB7-D0453DDBC6D3}" PersistentType="true">InfoWarning</Name>
+			<DisplayName TxtId=""><![CDATA[Machine Warning and Info]]></DisplayName>
+			<EventId>
+				<Name Id="1">Warning1</Name>
+				<DisplayName TxtId=""><![CDATA[My Warning 1]]></DisplayName>
+				<Severity>Warning</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="2">Warning2</Name>
+				<DisplayName TxtId=""><![CDATA[My Warning 2]]></DisplayName>
+				<Severity>Warning</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="3">Warning3</Name>
+				<DisplayName TxtId=""><![CDATA[My Warning 3]]></DisplayName>
+				<Severity>Warning</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="4">Warning4</Name>
+				<DisplayName TxtId=""><![CDATA[My Warning 4]]></DisplayName>
+				<Severity>Warning</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="5">Warning5</Name>
+				<DisplayName TxtId=""><![CDATA[My Warning 5]]></DisplayName>
+				<Severity>Warning</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="6">Info1</Name>
+				<DisplayName TxtId=""><![CDATA[My Info 1]]></DisplayName>
+				<Severity>Info</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="7">Info2</Name>
+				<DisplayName TxtId=""><![CDATA[My Info 2]]></DisplayName>
+				<Severity>Info</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="8">Info3</Name>
+				<DisplayName TxtId=""><![CDATA[My Info 3]]></DisplayName>
+				<Severity>Info</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="9">Info4</Name>
+				<DisplayName TxtId=""><![CDATA[My Info 4]]></DisplayName>
+				<Severity>Info</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="10">Info5</Name>
+				<DisplayName TxtId=""><![CDATA[My Info 5]]></DisplayName>
+				<Severity>Info</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{22299539-A438-4A2E-8BFD-9FED189CCC92}"/>
+				<Hide GUID="{824291A8-AD53-4600-9D1A-EB51D175BAC8}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{C4C4A68B-3A81-4E56-92E8-2C80F623B8B6}" PersistentType="true">DynamicAlarms</Name>
+			<DisplayName TxtId=""><![CDATA[Dynamic Alarms {0}]]></DisplayName>
+			<EventId>
+				<Name Id="1">DynAlarm1</Name>
+				<DisplayName TxtId=""><![CDATA[Alarm with ID (Error ID : {0})]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="2">DynAlarm2</Name>
+				<DisplayName TxtId=""><![CDATA[Alarm with ID (Errro ID : {0});]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{205DFA01-5146-4E99-A558-1E616C8CFDAE}"/>
+				<Hide GUID="{FECC8546-8403-450E-BEB0-FF708DD38C8F}"/>
+				<Hide GUID="{4089FD53-0251-4239-BC48-8710F1DFC786}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
+	<Project ProjectGUID="{596D691D-F381-49EA-B05A-D076B47D619C}" Target64Bit="true" ShowHideConfigurations="#x106">
+		<System>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project File="eventLogger.xti"/>
+		</Plc>
+	</Project>
+</TcSmProject>
